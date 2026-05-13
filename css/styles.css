@@ -1,7 +1,7 @@
 :root {
     --bg-main: #070a13;
     --bg-card: #0f1626;
-    --accent: #2563eb; /* Cambia dinámicamente con JS */
+    --accent: #2563eb;
     --text-main: #ffffff;
     --text-muted: #64748b;
     --radius: 20px;
@@ -18,25 +18,33 @@ body {
     background-color: var(--bg-main);
     color: var(--text-main);
     min-height: 100vh;
+    /* Evita problemas de scroll vertical en navegadores móviles */
+    min-height: -webkit-fill-available; 
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    /* padding-top adaptado para móviles con isla dinámica o muesca */
+    padding: calc(16px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom)) 16px;
+}
+
+html {
+    height: -webkit-fill-available;
 }
 
 .player-container {
     width: 100%;
-    max-width: 480px;
+    max-width: 440px; /* Un poco más estrecho para ajustar mejor en pantallas pequeñas */
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px; /* Espacio más ajustado en móvil */
 }
 
 .main-header h1 {
-    font-size: 1.8rem;
+    font-size: 1.5rem; /* Letra ligeramente más pequeña en móvil */
     font-weight: 900;
     text-align: center;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
 }
 
 .main-header h1 span {
@@ -48,7 +56,7 @@ body {
 .bento-card {
     background-color: var(--bg-card);
     border-radius: var(--radius);
-    padding: 20px;
+    padding: 16px; /* Menor relleno en móvil para priorizar contenido */
     border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
@@ -56,10 +64,10 @@ body {
 .logo-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: calc(var(--radius) - 6px);
+    aspect-ratio: 21 / 9; /* Formato más panorámico en móvil para ahorrar espacio vertical */
+    border-radius: calc(var(--radius) - 8px);
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 #station-logo {
@@ -70,77 +78,84 @@ body {
 }
 
 .playing #station-logo {
-    transform: scale(1.05);
+    transform: scale(1.03);
     filter: brightness(1.1);
 }
 
 .live-badge {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    top: 10px;
+    left: 10px;
     background-color: #ef4444;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-size: 0.65rem;
     font-weight: 800;
+    letter-spacing: 0.5px;
 }
 
 .track-details h2 {
-    font-size: 1.4rem;
-    margin-bottom: 4px;
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Evita que títulos largos rompan el diseño */
+}
+
+.track-details p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 /* Grid de Canales */
 .channels-card h3 {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     letter-spacing: 0.5px;
 }
 
 .channels-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
 }
 
 .channel-btn {
     background-color: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
     color: var(--text-main);
-    padding: 14px;
+    padding: 12px 14px; /* Altura ideal para la yema de los dedos (Zona táctil óptima) */
     border-radius: 12px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     text-align: left;
     display: flex;
     align-items: center;
     gap: 12px;
+    -webkit-tap-highlight-color: transparent; /* Elimina el cuadro azul clásico de Android al pulsar */
     transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.3s ease;
 }
 
 .channel-btn i {
-    font-size: 1.2rem;
-}
-
-.channel-btn:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    font-size: 1.1rem;
 }
 
 .channel-btn.active {
     background-color: var(--accent);
     color: white;
     border-color: transparent;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* Controles de Reproducción */
 .controls-card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* En móvil se alinean de lado a lado para ahorrar espacio vertical */
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
 }
 
@@ -148,47 +163,53 @@ body {
     background-color: var(--accent);
     color: white;
     border: none;
-    width: 64px;
-    height: 64px;
+    width: 56px; /* Ligeramente más compacto */
+    height: 56px;
     border-radius: 50%;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-primary:hover {
-    transform: scale(1.05);
 }
 
 .volume-container {
     display: flex;
     align-items: center;
     gap: 10px;
-    width: 100%;
-    max-width: 240px;
+    flex-grow: 1;
     color: var(--text-muted);
 }
 
 #volume-slider {
-    flex: 1;
+    width: 100%;
     accent-color: var(--accent);
     cursor: pointer;
-    transition: accent-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 6px; /* Control deslizante más estilizado */
 }
 
-/* Responsividad Avanzada (Escritorio) */
+/* Responsividad Avanzada (Escritorio / Tablets grandes) */
 @media (min-width: 768px) {
     .player-container {
         max-width: 750px;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto auto;
+        gap: 16px;
     }
     
     .main-header {
         grid-column: span 2;
+    }
+
+    .main-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .bento-card {
+        padding: 20px;
     }
 
     .station-card {
@@ -196,6 +217,28 @@ body {
     }
     
     .logo-container {
-        aspect-ratio: 1 / 1;
+        aspect-ratio: 1 / 1; /* Vuelve a ser cuadrado en pantallas grandes */
+        margin-bottom: 16px;
+    }
+
+    .track-details h2 {
+        font-size: 1.4rem;
+        white-space: normal;
+    }
+
+    .controls-card {
+        flex-direction: column; /* Vuelve a formato vertical en escritorio */
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .btn-primary {
+        width: 64px;
+        height: 64px;
+        font-size: 1.6rem;
+    }
+    
+    .btn-primary:hover {
+        transform: scale(1.05);
     }
 }
