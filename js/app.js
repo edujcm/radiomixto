@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         trackTitle.textContent = name;
         
-        // Aplica el color dinámico 'data-color' a la propiedad CSS del documento
+        // Aplica el color dinámico '--accent' a la propiedad CSS del documento
         document.documentElement.style.setProperty('--accent', color);
 
         if (url.includes('.m3u8')) {
@@ -60,11 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!audio.src && !hls) {
                 const activeBtn = document.querySelector('.channel-btn.active');
                 if (activeBtn) {
-                    loadStream(
-                        activeBtn.getAttribute('data-stream'), 
-                        activeBtn.getAttribute('data-name'),
-                        activeBtn.getAttribute('data-color')
-                    );
+                    // Corrección: Garantiza un color fallback seguro si falta 'data-color'
+                    const streamUrl = activeBtn.getAttribute('data-stream');
+                    const streamName = activeBtn.getAttribute('data-name');
+                    const streamColor = activeBtn.getAttribute('data-color') || '#2563eb';
+                    
+                    loadStream(streamUrl, streamName, streamColor);
                     return;
                 }
             }
@@ -81,4 +82,34 @@ document.addEventListener('DOMContentLoaded', () => {
     volumeSlider.addEventListener('input', (e) => {
         audio.volume = e.target.value;
     });
-});
+
+    // Función para actualizar el reloj y la fecha en 2 líneas
+    function initDateTime() {
+        const clockElement = document.getElementById('live-clock');
+        const dateElement = document.getElementById('live-date');
+        
+        // Validar que los elementos existen en el HTML para evitar errores en consola
+        if (!clockElement || !dateElement) return;
+        
+        function updateDateTime() {
+            const now = new Date();
+            
+            // 1. Obtener y formatear componentes de la Hora
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // 2. Obtener y formatear componentes de la Fecha (Día/Mes/Año)
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            dateElement.textContent = `${day}/${month}/${year}`;
+        }
+        
+        updateDateTime(); 
+        setInterval(updateDateTime, 1000); 
+    }
+    
+    initDateTime(); 
+}); // Único cierre correcto y limpio del DOMContentLoaded
