@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RADIO_MIXTO | Tu Selector de Radio en Vivo</title>
+    <!-- MOTOR HLS RECONSTRUIDO: Enlace CDN oficial completo para reproducir .m3u8 -->
+    <script src="jsdelivr.net"></script>
+    <!-- LIBRERÍA DE ICONOS RECONSTRUIDA: Enlace CDN oficial completo de Phosphor Icons -->
+    <script src="unpkg.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="player-container">
+        <header class="main-header">
+            <h1>RADIO<span>_MIXTO</span></h1>
+        </header>
+
+        <!-- Tarjeta Bento 1: Información -->
+        <div class="bento-card station-card">
+            <div class="logo-container">
+                <img src="img/radioAzul.png" alt="Logo" id="station-logo">
+                <div class="live-badge">EN DIRECTO</div>
+            </div>
+            <div class="track-details">
+                <h2 id="track-title">Selecciona una emisora</h2>
+                <p id="track-artist">RADIO_MIXTO Premium</p>
+            </div>
+        </div>
+
+        <!-- Tarjeta Bento 2: Selector con URLs de streaming corregidas y actualizadas -->
+        <div class="bento-card channels-card">
+            <h3>Sintonizar Canal</h3>
+            <div class="channels-grid">
+                <button class="channel-btn active" data-stream="https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3" data-name="Cadena SER" data-color="#2563eb">
+                    <i class="ph ph-radio"></i> Cadena SER
+                </button>
+                <button class="channel-btn" data-stream="https://cadena100-cope.flumotion.com/playlist.m3u8" data-name="Cadena 100" data-color="#ec4899">
+                    <i class="ph ph-music-notes"></i> Cadena 100
+                </button>
+                <button class="channel-btn" data-stream="https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40.mp3" data-name="LOS40" data-color="#eab308">
+                    <i class="ph ph-headphones"></i> LOS 40
+                </button>
+            </div>
+        </div>
+
+        <!-- Tarjeta Bento 3: Controles -->
+        <div class="bento-card controls-card">
+            <div class="main-controls">
+                <button id="play-btn" class="btn-primary"><i class="ph-fill ph-play"></i></button>
+            </div>
+            <div class="volume-container">
+                <i class="ph ph-speaker-high"></i>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.8">
+            </div>
+        </div>
+
+        <audio id="audio-stream" preload="none"></audio>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
