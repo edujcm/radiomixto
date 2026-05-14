@@ -10,7 +10,7 @@
   "categories": ["music", "utilities"],
   "icons": [
   {
-    "src": "img/radioAzul.png",
+    "src": "img/radioApp.png",
     "sizes": "any",
     "type": "image/png",
     "purpose": "any"
