@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         playerContainer.classList.add('playing');
-        playBtn.innerHTML = '<i class="ph-fill ph-pause"></i>';
+        // CORRECCIÓN: Nomenclatura oficial v2 para mostrar el icono de pausa relleno
+        playBtn.innerHTML = '<i class="ph ph-pause-fill"></i>';
     }
 
     channelButtons.forEach(button => {
@@ -60,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!audio.src && !hls) {
                 const activeBtn = document.querySelector('.channel-btn.active');
                 if (activeBtn) {
-                    // Corrección: Garantiza un color fallback seguro si falta 'data-color'
                     const streamUrl = activeBtn.getAttribute('data-stream');
                     const streamName = activeBtn.getAttribute('data-name');
                     const streamColor = activeBtn.getAttribute('data-color') || '#2563eb';
@@ -71,11 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             audio.play().catch(err => console.log("Error al reproducir:", err));
             playerContainer.classList.add('playing');
-            playBtn.innerHTML = '<i class="ph-fill ph-pause"></i>';
+            // CORRECCIÓN: Nomenclatura oficial v2 para mostrar el icono de pausa relleno
+            playBtn.innerHTML = '<i class="ph ph-pause-fill"></i>';
         } else {
             audio.pause();
             playerContainer.classList.remove('playing');
-            playBtn.innerHTML = '<i class="ph-fill ph-play"></i>';
+            // CORRECCIÓN: Nomenclatura oficial v2 para mostrar el icono de play relleno
+            playBtn.innerHTML = '<i class="ph ph-play-fill"></i>';
         }
     });
 
@@ -83,12 +85,20 @@ document.addEventListener('DOMContentLoaded', () => {
         audio.volume = e.target.value;
     });
 
+    // Registro del Service Worker para habilitar la instalación PWA (Ruta relativa fija)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('PWA Service Worker registrado con éxito'))
+                .catch(err => console.log('Error al registrar Service Worker:', err));
+        });
+    }
+
     // Función para actualizar el reloj y la fecha en 2 líneas
     function initDateTime() {
         const clockElement = document.getElementById('live-clock');
         const dateElement = document.getElementById('live-date');
         
-        // Validar que los elementos existen en el HTML para evitar errores en consola
         if (!clockElement || !dateElement) return;
         
         function updateDateTime() {
@@ -112,4 +122,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     initDateTime(); 
-}); // Único cierre correcto y limpio del DOMContentLoaded
+}); // Cierre unificado y limpio de la carga del documento

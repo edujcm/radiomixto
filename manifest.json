@@ -1,0 +1,20 @@
+{
+  "name": "RADIO MIXTO",
+  "short_name": "RADIO MIXTO",
+  "description": "Radio en Vivo en formato Bento",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#070a13",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "categories": ["music", "utilities"],
+  "icons": [
+  {
+    "src": "img/radioAzul.png",
+    "sizes": "any",
+    "type": "image/png",
+    "purpose": "any"
+  }
+]
+
+}
