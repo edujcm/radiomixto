@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         playerContainer.classList.add('playing');
-        // CORRECCIÓN: Nomenclatura oficial v2 para mostrar el icono de pausa relleno
-        playBtn.innerHTML = '<i class="ph ph-pause-fill"></i>';
+        // CAMBIO: Al cargar streaming (reproduciendo), se aplica el icono de pausa y texto en VERDE
+        playBtn.innerHTML = '<i class="ph-fill ph-pause" style="color: #22c55e;"></i><span style="font-size: 0.5rem; color: #22c55e;">Play/Pause</span>';
     }
 
     channelButtons.forEach(button => {
@@ -71,13 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             audio.play().catch(err => console.log("Error al reproducir:", err));
             playerContainer.classList.add('playing');
-            // CORRECCIÓN: Nomenclatura oficial v2 para mostrar el icono de pausa relleno
-            playBtn.innerHTML = '<i class="ph ph-pause-fill"></i>';
+            // CAMBIO: Al dar click y reproducir, icono de pausa y texto cambian a VERDE
+            playBtn.innerHTML = '<i class="ph-fill ph-pause" style="color: #22c55e;"></i><span style="font-size: 0.5rem; color: #22c55e;">Play/Pause</span>';
         } else {
             audio.pause();
             playerContainer.classList.remove('playing');
-            // CORRECCIÓN: Nomenclatura oficial v2 para mostrar el icono de play relleno
-            playBtn.innerHTML = '<i class="ph ph-play-fill"></i>';
+            // CAMBIO: Al pausar, icono de play y texto cambian a ROJO
+            playBtn.innerHTML = '<i class="ph-fill ph-play" style="color: #ef4444;"></i><span style="font-size: 0.5rem; color: #ef4444;">Play/Pause</span>';
         }
     });
 
@@ -122,4 +122,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     initDateTime(); 
-}); // Cierre unificado y limpio de la carga del documento
+});
